@@ -2,13 +2,15 @@
   "name": "mashupapi",
   "version": "1.0.0",
   "description": "A mashup API that provides information about muscians and more",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Joachim Zetterman",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "got": "^11.1.0",
+    "jest": "^26.0.0"
   }
 }
