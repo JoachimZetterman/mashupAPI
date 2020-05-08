@@ -1,6 +1,8 @@
 var router = require('express').Router();
 var got = require('got')
 
+var artistService = require('./../../services/artistService.js');
+
 //http://localhost:3000/api/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da
 
 router.get('/artist/:mbid', async (req, res, next) => {
@@ -24,10 +26,10 @@ router.get('/artist/:mbid', async (req, res, next) => {
                 wikiRelation = r
             }
         }
-
+        
         var respWikipedia = await wikiSender(wikiRelation)
 
-        var respCoverArtArchive = await coverArtSender(respMusicBrainz["release-groups"])
+        var respCoverArtArchive = await artistService.coverArtSender(respMusicBrainz["release-groups"])
 
         //Artist object to be returned to user. TODO: Use modell Artist
         var artist = 
@@ -45,7 +47,7 @@ router.get('/artist/:mbid', async (req, res, next) => {
     var timeTaken = new Date().getTime() - timeStarted;
     console.log("Finished with request. Time: " + timeTaken + "ms") 
 
-    res.send(artist)
+    res.json(JSON.stringify(artist))
 });
 
 async function wikiSender(wikiObject){
@@ -84,33 +86,6 @@ async function wikiSender(wikiObject){
     return {"description": description}
 }
 
-async function coverArtSender(releaseGroup){
-    //releaseGroup = array of albums with mbid/id and title for each album
-
-    var url = "http://coverartarchive.org/release-group/"
-    var albums = []
-    var imageURI, imageResp, albums
-
-    for (const i of releaseGroup) {
-        try{
-            //TODO: Currently blocking... Should probably beed handled async and handle in parralell... 
-            imageResp = await got(url + i.id)
-            imageURI = JSON.parse(imageResp.body).images[0].image
-        }
-        catch{
-            imageURI = "No image"
-        }
-       
-        album = {
-            "title": i.title,
-            "id": i.id,
-            "image": imageURI
-        }
-
-        albums.push(album)
-    }
-    return {"albums": albums}
-}
 
 function descriptionParser(description){
     //TODO: Fix. Works good for Nirvana but not sure how the API works for all MIDS. To much spliting and trimming for my likning. 

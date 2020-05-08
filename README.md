@@ -4,9 +4,11 @@ A simple mashup api for artist information such as description, albums e.g. crea
 
 ## Getting Started
 
-Unzip project or git clone https://github.com/JoachimZetterman/mashupAPI.git
-npm install 
+Unzip project or git clone https://github.com/JoachimZetterman/mashupAPI.git,
+npm install,
 npm start
+
+Project structure is intended to be split into API <-> Service <- > Models, similar to MVC pattern.
 
 ## Example API call
 
@@ -21,8 +23,8 @@ npm run test
 
 07/05/2020
 - Improve performance. Currently around 15-20 sec due to blocking parts were API calls are being chained...
-- Write more unit tests
-- Refactor some got calls in artist route into functions for better structure, clarity and reusability
+- Write more unit tests. There is one used as example.
+- Refactor methods in route/api to artistService.js. There is one used as example. 
 - Implement Artist model instead
 
 ## Built With
