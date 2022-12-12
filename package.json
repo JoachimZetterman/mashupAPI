@@ -9,7 +9,7 @@
   "author": "Joachim Zetterman",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "got": "^11.1.0",
     "jest": "^26.0.0"
   }
